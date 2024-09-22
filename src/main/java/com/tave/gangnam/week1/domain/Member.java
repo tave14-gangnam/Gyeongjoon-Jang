@@ -1,4 +1,4 @@
-package com.tave.gangnam.member.domain;
+package com.tave.gangnam.week1.domain;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
