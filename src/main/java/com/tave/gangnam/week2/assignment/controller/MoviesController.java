@@ -17,10 +17,10 @@ public class MoviesController {
     }
 
     // 조회
-    @GetMapping("/{id}")
+    @GetMapping("/movies/{id}")
     public Movies show(@PathVariable Long id) { return moviesService.show(id); }
 
     // 저장
-    @PostMapping
+    @PostMapping("/movies")
     public Movies create(@RequestBody MoviesDto dto) { return moviesService.create(dto); }
 }

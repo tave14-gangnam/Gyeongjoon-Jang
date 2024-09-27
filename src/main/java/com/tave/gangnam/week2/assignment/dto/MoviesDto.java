@@ -10,13 +10,13 @@ public class MoviesDto {
 
     private String genre;
 
+    // 기본 생성자 -> 외부에서 객체 생성 가능
+    public MoviesDto() {}
+
     // DTO를 Entity로 변환
     public Movies toEntity() {
         return new Movies( id, title, genre);
     }
-
-    // 기본 생성자 -> 외부에서 객체 생성 가능
-    public MoviesDto() {}
 
     // Getter, Setter
     public Long getId() {

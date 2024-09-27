@@ -3,6 +3,7 @@ package com.tave.gangnam.week2.assignment.Entity;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "movies")
 public class Movies {
 
     @Id
@@ -14,14 +15,15 @@ public class Movies {
 
     private String genre;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     private Users users;
 
-    // 기본 생성자 -> 외부에서 객체 생성 가능
-    public Movies() {}
+    public Movies() {
+        // JPA에서 사용하기 위한 기본 생성자
+    }
 
-    // 생성자 -> toEntity할때 사용
+    // 생성자 -> toEntity할 때 사용
     public Movies(Long id, String title, String genre) {
         this.id = id;
         this.title = title;

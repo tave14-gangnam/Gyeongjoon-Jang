@@ -2,7 +2,11 @@ package com.tave.gangnam.week2.assignment.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
+@Table(name = "users")
 public class Users {
 
     @Id
@@ -14,8 +18,19 @@ public class Users {
 
     private int age;
 
-    @OneToMany(mappedBy = "MOVIE_ID")
-    private Movies movies;
+    public Users() {
+        // JPA에서 사용하기 위한 기본 생성자
+    }
+
+    @OneToMany(mappedBy = "users")
+    private List<Movies> movies = new ArrayList<>();
+
+    // 생성자 -> toEntity할 때 사용
+    public Users(Long id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
 
     public Long getId() {
         return id;
@@ -41,11 +56,11 @@ public class Users {
         this.age = age;
     }
 
-    public Movies getMovies() {
+    public List<Movies> getMovies() {
         return movies;
     }
 
-    public void setMovies(Movies movies) {
+    public void setMovies(List<Movies> movies) {
         this.movies = movies;
     }
 }
