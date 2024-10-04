@@ -1,4 +1,4 @@
-package com.tave.gangnam.week2.ex.dto;
+package com.tave.gangnam.week3.assigment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BankResponseDTO {
+public class BankRequestDto {
+
     private String bankName;
+
+    private Long installmentSavings;
+
 }
