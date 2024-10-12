@@ -17,23 +17,21 @@ public class CustomerController {
 
     private final CustomerService customerService;
 
-
     // 유저 등록
     @PostMapping
     public ResponseEntity<String> createCustomer(@RequestBody CustomerRequestDto customerRequestDto) {
         log.info("Controller: 유저 등록 시작!");
-        ResponseEntity<String> response = customerService.createCustomer(customerRequestDto);
+        CustomerResponseDto customer = customerService.createCustomer(customerRequestDto);
         log.info("Controller: 유저 등록 메시지 출력!");
-        return ResponseEntity.status(HttpStatus.CREATED).body(response.getBody());
+        return ResponseEntity.status(HttpStatus.CREATED).body("손님 " + customer.getCustomerName() + "님이 등록되었습니다.");
     }
-
 
     // 유저 조회
     @GetMapping("/{customerId}")
     public ResponseEntity<CustomerResponseDto> showCustomer(@PathVariable Long customerId) {
         log.info("Controller: 유저 조회 시작!");
-        CustomerResponseDto customerResponseDto = customerService.showCustomer(customerId);
+        ResponseEntity<CustomerResponseDto> customerResponseDto = customerService.showCustomer(customerId);
         log.info("Controller: 유저 조회 메시지 출력!");
-        return ResponseEntity.ok(customerResponseDto);
+        return customerResponseDto;
     }
 }

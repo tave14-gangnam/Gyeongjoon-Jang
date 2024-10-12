@@ -25,10 +25,10 @@ public class Bank {
     @Column(nullable = false)
     private BigDecimal installmentSavings;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "bank")
     private List<Loan> loans = new ArrayList<>();
 }

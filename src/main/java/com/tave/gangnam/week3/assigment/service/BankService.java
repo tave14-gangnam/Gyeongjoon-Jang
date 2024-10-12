@@ -10,6 +10,7 @@ import com.tave.gangnam.week3.assigment.exception.BankNotFoundException;
 import com.tave.gangnam.week3.assigment.exception.CustomerNotFoundException;
 import com.tave.gangnam.week3.assigment.repository.BankRepository;
 import com.tave.gangnam.week3.assigment.repository.CustomerRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -52,26 +53,22 @@ public class BankService {
         bankRepository.save(newBank);
 
         log.info("service: 메시지 반환!");
-        return ResponseEntity.ok(newBank.getBankName() + "이 등록되었습니다.");
+        return ResponseEntity.status(HttpStatus.CREATED).body(newBank.getBankName() + "이 등록되었습니다.");
     }
 
     // 은행 조회 API
     @Transactional(readOnly = true)
-    public BankResponseDto showBank(Long customerId, Integer bankOrder) {
+    public ResponseEntity<BankResponseDto> showBank(Long customerId, Long bankId) {
         log.info("service: 은행 조회 API 시작!");
 
         Customer customer = customerRepository.findById(customerId)
                 .orElseThrow(() -> new CustomerNotFoundException("사용자 ID: " + customerId + "이(가) 존재하지 않습니다."));
 
-        List<Bank> customerBanks = bankRepository.findByCustomerOrderByBankIdAsc(customer);
+        Bank bank = bankRepository.findById(bankId)
+                .orElseThrow(() -> new BankNotFoundException("은행 ID: " + bankId + "가 존재하지 않습니다."));
 
-        if (bankOrder < 1 || bankOrder > customerBanks.size()) {
-            throw new BankNotFoundException("사용자의 " + bankOrder + "번째 은행이 존재하지 않습니다.");
-        }
+        BankResponseDto bankDto = BankMapper.toBankDto(bank, customer);
 
-        Bank bank = customerBanks.get(bankOrder - 1);
-
-        return BankMapper.toBankDto(bank, customer);
+        return ResponseEntity.status(HttpStatus.FOUND).body(bankDto);
     }
 }
-

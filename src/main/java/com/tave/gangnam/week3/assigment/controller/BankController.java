@@ -5,7 +5,6 @@ import com.tave.gangnam.week3.assigment.dto.BankResponseDto;
 import com.tave.gangnam.week3.assigment.service.BankService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,19 +18,21 @@ public class BankController {
 
     // 은행 등록
     @PostMapping
-    public ResponseEntity<String> createBank(@PathVariable Long customerId, @RequestBody BankRequestDto bankRequestDto) {
+    public ResponseEntity<String> createBank(@PathVariable Long customerId,
+                                             @RequestBody BankRequestDto bankRequestDto) {
         log.info("Controller: 은행 등록 시작!");
         ResponseEntity<String> response = bankService.createBank(customerId, bankRequestDto);
         log.info("Controller: 은행 등록 메시지 반환!");
-        return ResponseEntity.status(HttpStatus.CREATED).body(response.getBody());
+        return response;
     }
 
     // 은행 조회
-    @GetMapping("/{bankOrder}")
-    public ResponseEntity<BankResponseDto> showBank(@PathVariable Long customerId, @PathVariable Integer bankOrder) {
+    @GetMapping("/{bankId}")
+    public ResponseEntity<BankResponseDto> showBank(@PathVariable Long customerId,
+                                                    @PathVariable Long bankId) {
         log.info("Controller: 은행 조회 시작!");
-        BankResponseDto bankResponseDto = bankService.showBank(customerId, bankOrder);
+        ResponseEntity<BankResponseDto> bankResponseDto = bankService.showBank(customerId, bankId);
         log.info("Controller: 은행 조회 메시지 반환!");
-        return ResponseEntity.ok(bankResponseDto);
+        return bankResponseDto;
     }
 }

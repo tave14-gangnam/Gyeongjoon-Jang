@@ -26,6 +26,6 @@ public class Customer {
     @Column(nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer")
     private List<Bank> banks = new ArrayList<>();
 }

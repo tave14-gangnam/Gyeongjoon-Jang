@@ -15,7 +15,7 @@ public class LoanResponseDto {
 
     private String loanName;
 
-    private BigDecimal loanAmount;
+    private Long loanAmount;
 
     private String color;
 

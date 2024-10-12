@@ -15,5 +15,5 @@ public class LoanRequestDto {
 
     private String loanName;
 
-    private BigDecimal loanAmount;
+    private Long loanAmount;
 }

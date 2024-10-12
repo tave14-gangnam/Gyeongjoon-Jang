@@ -21,7 +21,7 @@ public class LoanMapper {
                 .loanId(loan.getLoanId())
                 .loanName(loan.getLoanName())
                 .loanAmount(loan.getLoanAmount())
-                .color(loan.getColor())
+                .color(loan.getLoanAmount() >= 1000 ? (loan.getLoanAmount() >= 5000 ? "blue" : "red") : "yellow")
                 .bankName(bank.getBankName())
                 .build();
     }

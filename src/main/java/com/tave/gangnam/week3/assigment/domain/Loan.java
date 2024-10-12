@@ -21,15 +21,17 @@ public class Loan {
     private String loanName;
 
     @Column(nullable = false)
-    private BigDecimal loanAmount;
+    private Long loanAmount;
 
     private String color;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "bankId")
     private Bank bank;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "customerId")
     private Customer customer;
+
+
 }

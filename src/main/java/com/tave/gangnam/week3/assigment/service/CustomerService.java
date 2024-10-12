@@ -7,6 +7,7 @@ import com.tave.gangnam.week3.assigment.dto.CustomerResponseDto;
 import com.tave.gangnam.week3.assigment.exception.CustomerAlreadyExistsException;
 import com.tave.gangnam.week3.assigment.exception.CustomerNotFoundException;
 import com.tave.gangnam.week3.assigment.repository.CustomerRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,15 +26,20 @@ public class CustomerService {
 
     // 유저 등록 API
     @Transactional
-    public ResponseEntity<String> createCustomer(CustomerRequestDto customerRequestDto) {
+    public CustomerResponseDto createCustomer(CustomerRequestDto customerRequestDto) {
         log.info("service: 유저 등록 API 시작!");
 
         log.info("service: 기존회원인지 확인 시작");
         customerRepository.findByCustomerName(customerRequestDto.getCustomerName())
-                    .ifPresent(customer -> {
-                        log.info("service: 기존회원 입니다");
-                        throw new CustomerAlreadyExistsException("사용자: " + customerRequestDto.getCustomerName() + "님이 이미 존재합니다.");
-                    });
+//                .map(Customer::getCustomerName)
+//                        .ifPresent(customer -> {
+//                            throw new CustomerAlreadyExistsException("");
+//                        });
+
+                .ifPresent(customer -> {
+                    log.info("service: 기존회원 입니다");
+                    throw new CustomerAlreadyExistsException("사용자: " + customerRequestDto.getCustomerName() + "님이 이미 존재합니다.");
+                });
         log.info("service: 기존회원 아닙니다");
 
         log.info("service: 새로운 회원 객체 생성");
@@ -43,22 +49,24 @@ public class CustomerService {
         customerRepository.save(newCustomer);
 
         log.info("service: 메시지 반환!");
-        return ResponseEntity.ok("손님 " + newCustomer.getCustomerName() + "님이 등록되었습니다.");
+        return CustomerMapper.toDto(newCustomer);
     }
 
     // 유저 조회 API
     @Transactional(readOnly = true)
-    public CustomerResponseDto showCustomer(Long customerId) {
+    public ResponseEntity<CustomerResponseDto> showCustomer(Long customerId) {
         log.info("service: 유저 조회 API 시작!");
 
         log.info("service: 기존회원인지 확인 시작");
         Customer customer = customerRepository.findById(customerId)
-                    .orElseThrow(() -> {
-                        throw new CustomerNotFoundException("사용자 ID: " + customerId + "이(가) 존재하지 않습니다.");
-                    });
+                .orElseThrow(() -> {
+                    throw new CustomerNotFoundException("사용자 ID: " + customerId + "이(가) 존재하지 않습니다.");
+                });
         log.info("service: 기존회원 입니다");
 
         log.info("service: 객체를 DTO로 반환");
-        return CustomerMapper.toDto(customer);
+        CustomerResponseDto responseDto = CustomerMapper.toDto(customer);
+
+        return ResponseEntity.status(HttpStatus.FOUND).body(responseDto);
     }
 }
