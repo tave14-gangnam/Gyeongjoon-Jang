@@ -18,9 +18,9 @@ public class CustomerMapper {
     public static CustomerResponseDto toDto(Customer customer) {
         return CustomerResponseDto.builder()
                 .customerId(customer.getCustomerId())
-                .customerName(customer.getCustomerName())
+                .customerName(customer.getCustomerName() != null ? customer.getCustomerName() : "NONE")
                 .age(customer.getAge())
-                .password(customer.getPassword())
+                .password(customer.getPassword() != null ? customer.getPassword() : "NONE")
                 .build();
     }
 }
