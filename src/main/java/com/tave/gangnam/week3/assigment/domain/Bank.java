@@ -3,6 +3,7 @@ package com.tave.gangnam.week3.assigment.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,16 +19,16 @@ public class Bank {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long bankId;
 
+    @Column(nullable = false)
     private String bankName;
 
-    private Long installmentSavings;
+    @Column(nullable = false)
+    private BigDecimal installmentSavings;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customerId")
     private Customer customer;
 
     @OneToMany(mappedBy = "bank", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("loanId ASC")
     private List<Loan> loans = new ArrayList<>();
-
 }

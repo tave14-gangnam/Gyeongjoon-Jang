@@ -17,13 +17,15 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long customerId;
 
+    @Column(nullable = false, unique = true)
     private String customerName;
 
+    @Column(nullable = false)
     private int age;
 
-    private int password;
+    @Column(nullable = false)
+    private String password;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    @OrderBy("bankId ASC")
     private List<Bank> banks = new ArrayList<>();
 }

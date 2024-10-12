@@ -3,6 +3,8 @@ package com.tave.gangnam.week3.assigment.domain;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @Setter
@@ -15,9 +17,11 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loanId;
 
+    @Column(nullable = false)
     private String loanName;
 
-    private double loanAmount;
+    @Column(nullable = false)
+    private BigDecimal loanAmount;
 
     private String color;
 
