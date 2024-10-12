@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +15,5 @@ public class LoanRequestDto {
 
     private String loanName;
 
-    private double loanAmount;
-
+    private BigDecimal loanAmount;
 }

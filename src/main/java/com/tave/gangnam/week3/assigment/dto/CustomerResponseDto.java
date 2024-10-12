@@ -14,5 +14,5 @@ public class CustomerResponseDto {
 
     private int age;
 
-    private int password;
+    private String password;
 }

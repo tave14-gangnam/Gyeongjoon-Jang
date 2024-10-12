@@ -15,6 +15,5 @@ public class CustomerRequestDto {
 
     private int age;
 
-    private int password;
-
+    private String password;
 }

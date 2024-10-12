@@ -2,6 +2,8 @@ package com.tave.gangnam.week3.assigment.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,7 +15,7 @@ public class LoanResponseDto {
 
     private String loanName;
 
-    private double loanAmount;
+    private BigDecimal loanAmount;
 
     private String color;
 
